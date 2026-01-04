@@ -35,6 +35,10 @@ DELIMITER ','
 CSV HEADER;
 
 
+-------------------------------
+
+
+
 -- Dataset Overview
 SELECT * FROM retail_sales;
 
@@ -91,12 +95,11 @@ WHERE age IS NULL;
 
 
 -----------------------------------
-
-
 -- EDA
+-----------------------------------
 
 
--- Total Number of Sales
+-- What is total Number of Sales?
 SELECT COUNT(*) FROM retail_sales;
 
 
@@ -108,18 +111,18 @@ SELECT COUNT(DISTINCT customer_id) FROM retail_sales;
 SELECT DISTINCT category FROM retail_sales;
 
 
-
+------------------------------------------
 -- Data Analysis & Business Key Insights
+------------------------------------------
 
 
-
--- Sales made on '2022-11-05'
+-- Which sales are made on '2022-11-05'?
 SELECT *
 FROM retail_sales
 WHERE sale_date='2022-11-05';
 
 
--- Transactions where category is 'Clothing' and the quantity is more than 4 in NOV 2022
+-- Which transactions where category is 'Clothing' and the quantity are more than 4 in NOV 2022?
 SELECT *
 FROM retail_sales
 WHERE category='Clothing'
@@ -128,7 +131,7 @@ AND quantity >= 4;
 
 
 
--- Total Sale for each category
+-- Show the total sales for each category
 SELECT
 	category, 
 	SUM(total_sale) AS total_sales,
@@ -138,19 +141,19 @@ GROUP BY 1;
 	
 
 
--- Average age of customers who purchased items from the 'Beauty' category
+-- What is the average age of customers who purchased items from the 'Beauty' category?
 SELECT ROUND(AVG(age),2) AS avg_age
 FROM retail_sales
 WHERE category='Beauty';
 
 
--- Transactions where total_sale is more than 1000
+-- Which transaction where total_sale is more than 1000?
 SELECT *
 FROM retail_sales
 WHERE total_sale>1000;
 
 
--- No. of Transactions by each gender in each category
+-- How many transactions are there in each gender and each category?
 SELECT category, gender, COUNT(*) as total_transactions
 FROM retail_sales
 GROUP BY 1,2
@@ -158,7 +161,7 @@ ORDER BY 1;
 
 
 
--- Average sale for each month
+-- What is the average sale for each month?
 SELECT 
 	year,
 	month,
@@ -182,7 +185,7 @@ WHERE RANK=1;
 
 
 
--- Top 5 Customers by highest total_sales
+-- Show the Top 5 Customers by highest total_sales
 SELECT 
 	customer_id,
 	SUM(total_sale) AS total_sales
@@ -193,7 +196,7 @@ LIMIT 5;
 
 
 
--- Number of unique customers who bought items from each category
+-- Show the no. of unique customers who bought items from each category
 SELECT 
 	category,
 	COUNT(DISTINCT customer_id) AS unique_customer_count
@@ -201,7 +204,7 @@ FROM retail_sales
 GROUP BY category;
 
 
--- Number of orders between different shifts of the day
+-- Show the no. of orders between different shifts of the day
 WITH hourly_sale AS (
 SELECT *,
 	CASE 
@@ -217,6 +220,6 @@ SELECT
 FROM hourly_sale
 GROUP BY shift;
 
-
+------------------
 -- END OF PROJECT
-
+------------------
